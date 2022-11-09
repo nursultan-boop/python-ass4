@@ -1,6 +1,0 @@
-import flask
-
-
-@app.route("/")
-def home():
-    return "Hello, Flask!"
