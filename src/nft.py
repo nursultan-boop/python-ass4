@@ -24,14 +24,11 @@ with app.app_context():
     db.create_all()
 
 @app.route('/', methods=['GET', 'POST'])
-
 def form_example():    
     global logged_in
     if not logged_in:
         return redirect("/login")
     if request.method == 'POST':
-        if logged_in==False:
-            return redirect('/login') 
         returnValue=""
         address = request.form['address']
         nft_obj = nft.query.filter_by(adrs=address).first()
@@ -57,6 +54,7 @@ def form_example():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     global logged_in
+    logged_in=False
     error = None
     if request.method == 'POST':
         logged_Users = Users.query.filter_by(login=request.form['username']).first()
@@ -73,6 +71,7 @@ def login():
 @app.route('/signup', methods=["GET", "POST"])
 def Users_create():
     error=None
+    logged_in=False
     if request.method == "POST":
         logged_Users = Users.query.filter_by(login=request.form['username']).first()
         if logged_Users is None:
